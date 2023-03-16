@@ -83,9 +83,9 @@ fig.savefig('combine.png')
 #print(Ef)
 quantities = ['Ea (eV)', 'Edelta (eV)', 'Max_f (eV/A)', 'IS (eV)', 'TS (eV)', 'FS (eV)']
 val_list = [Ef, dE, max_force, energy_list[0][0], TS_energy[0], energy_list[-1][0]]
-val_round = [ round(elem, 2) for elem in val_list]
+#val_round = [ round(elem, 2) for elem in val_list]
 data_dict = {'Quantity': quantities,
-	     'Value': val_round}
+	     'Value': val_list}
 df_data = pd.DataFrame(data_dict)
 output_file = 'Barrier_info.csv'
 df_data.to_csv(output_file)
@@ -93,10 +93,18 @@ df_data.to_csv(output_file)
 ax = fig.add_subplot(spec[1,2], frame_on = False)
 ax.xaxis.set_visible(False)  # hide the x axis
 ax.yaxis.set_visible(False)  # hide the y axis
-tbl = table(ax, df_data, rowLabels=['']*df_data.shape[0] ,loc = 'center')
+#tbl = table(ax, df_data, rowLabels = ['']*df_data.shape[0],loc = 'center')
+
+#ref link
+#https://stackoverflow.com/questions/19726663/how-to-save-the-pandas-dataframe-series-data-as-a-figure
+
+tbl = ax.table(cellText = df_data.values, colLabels = df_data.columns, loc = 'center')
+tbl.auto_set_column_width(col=list(range(len(df_data['Value'])))) 
 tbl.auto_set_font_size(False)
 tbl.set_fontsize(12)
 fig.savefig('combine.png')
+print(df_data.values[0])
+
 #display(fig)
 #fig.savefig('combine.png')
 #with pd.ExcelWriter(output_file) as writer:
