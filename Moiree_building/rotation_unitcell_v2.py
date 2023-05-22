@@ -60,19 +60,19 @@ eps = 1e-8
 
 #values to take root
 #need to input  
-root = 3
+root = 13
 #root value
 root_value = np.sqrt(root)
 
 #index of atoms to get vectors and angle rotation (from ntimes repeating structure)
 #need to input
-index_0 = 2
-index_1 = 37
+index_0 = 1
+index_1 = 64
 #print(pos_mol[index_1])
 
 #import structure
 slab = read('POSCAR')
-ntimes = 3 #number of times to repeat
+ntimes = 5 #number of times to repeat
 slab_repeat = slab.repeat((ntimes,ntimes,1))
 #view(slab_repeat)
 cell_vector = slab.cell
@@ -131,7 +131,7 @@ atoms = slab.copy()   ##IMPORTANT to avoid changing of vector0_x into vector of 
 atoms *= (2*root, 2*root, 1)
 view(atoms)
 #translate backward so that new unit cell covers all atoms
-shift_vector = [-2.01*vector_length,0, 0]
+shift_vector = [-2.51*vector_length,0, 0]
 atoms.translate(shift_vector)
 
 #STEP2 - set new unit cell
@@ -145,14 +145,14 @@ view(atoms)
 print(vector0_x)
 #STEP4 - rotate both atoms and new unit cell to original orientation of slab (111)
 #rotate(atoms,cell_new3D[0,:],[1,0,0],cell_new3D[1,:],[1/2,np.sqrt(3)/2,0])
-rotate(atoms,cell_new3D[0,:],vector0_x,cell_new3D[1,:],vector0_y)
-atoms.rotate(60,'z',rotate_cell = True )
+#rotate(atoms,cell_new3D[0,:],vector0_x,cell_new3D[1,:],vector0_y)
+atoms.rotate(-13.90,'z',rotate_cell = True )
 atoms = atoms.repeat((1,1,1))
 #print(atoms.get_tags())
 atoms.center(vacuum = 8, axis = 2)
 view(atoms)
 
-atoms.write('POSCAR_rootTiB2')
+atoms.write('POSCAR_root')
 
 #print(cell_new3D)
 #print(vector0_x)
